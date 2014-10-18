@@ -12,6 +12,7 @@ public class IntDie implements Die<Integer> {
         this.n=n;
         this.k=k;
     }
+
     public Integer Roll() {
         int sum = 0;
         for(int i=0;i<n;i++){
