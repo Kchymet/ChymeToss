@@ -22,6 +22,19 @@ public class diceGrammarBaseListener implements diceGrammarListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterIntdie(@NotNull diceGrammarParser.IntdieContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitIntdie(@NotNull diceGrammarParser.IntdieContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterSet(@NotNull diceGrammarParser.SetContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -55,6 +68,58 @@ public class diceGrammarBaseListener implements diceGrammarListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitSetcontents(@NotNull diceGrammarParser.SetcontentsContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterPrgm(@NotNull diceGrammarParser.PrgmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitPrgm(@NotNull diceGrammarParser.PrgmContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterFactor(@NotNull diceGrammarParser.FactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitFactor(@NotNull diceGrammarParser.FactorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterSetdie(@NotNull diceGrammarParser.SetdieContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitSetdie(@NotNull diceGrammarParser.SetdieContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterPrimary(@NotNull diceGrammarParser.PrimaryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitPrimary(@NotNull diceGrammarParser.PrimaryContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

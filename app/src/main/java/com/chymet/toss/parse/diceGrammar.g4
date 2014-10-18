@@ -12,18 +12,50 @@ import java.util.List;
 import java.util.ArrayList;
 }
 
+
+prgm returns [Die d]
+    : expr EOF { $d=$expr.d; }
+    ;
+
 expr returns [Die d]
+    @init{
+          Die d2 = null;
+    }
+    : factor ('+' e1=expr {d2=$e1.d;})? {if(null==d2){$d=$factor.d;} else{ $d=new BinaryDie($factor.d,d2);}}
+    ;
+
+
+factor returns [Die d]
+    : /*factor_prefix*/ primary {$d=$primary.d;}
+    ;
+
+/* currently not implemented, needs LL rewrite
+factor_prefix
+    : factor_prefix primary MULOP
+    | empty
+    ;*/
+
+primary returns [Die d]
+    : '(' expr ')'  {$d=$expr.d;}
+    | intdie        {$d=$intdie.d;}
+    | setdie        {$d=$setdie.d;}
+    ;
+
+intdie returns [IntDie d]
     : i1=INTEGER 'd' i2=INTEGER {
                            int n = Integer.parseInt($i1.text);
                            int k = Integer.parseInt($i2.text);
                            $d = new IntDie(n,k);
                            }
-    | i1=INTEGER 'd' s1=set {
+    ;
+setdie returns [SetDie d]
+    : i1=INTEGER 'd' s1=set {
                            int n = Integer.parseInt($i1.text);
                            List<Object> options = $s1.l;
                            $d = new SetDie(n,options);
                            }
     ;
+
 
 set returns [List<Object> l]
     @init
@@ -32,7 +64,7 @@ set returns [List<Object> l]
     }
     : '{' sc1=setcontents { $l.add($sc1.o); } (',' sc=setcontents {$l.add($sc.o);})* '}'
     ;
-
+    
 setcontents returns [Object o]
     : INTEGER { $o=Integer.valueOf($INTEGER.text); }
     ;
@@ -40,6 +72,15 @@ setcontents returns [Object o]
 empty
     :
     ;
+
+ADDOP
+    : '+'
+    ;
+
+/*MULOP
+    : '*'
+    ;*/
+
 
 INTEGER
     : [0-9]+

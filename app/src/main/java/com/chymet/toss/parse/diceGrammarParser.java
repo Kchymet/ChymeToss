@@ -20,14 +20,16 @@ public class diceGrammarParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__3=1, T__2=2, T__1=3, T__0=4, INTEGER=5;
+		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, ADDOP=7, INTEGER=8;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'d'", "'{'", "','", "'}'", "INTEGER"
+		"<INVALID>", "'d'", "'('", "')'", "'{'", "','", "'}'", "'+'", "INTEGER"
 	};
 	public static final int
-		RULE_expr = 0, RULE_set = 1, RULE_setcontents = 2, RULE_empty = 3;
+		RULE_prgm = 0, RULE_expr = 1, RULE_factor = 2, RULE_primary = 3, RULE_intdie = 4, 
+		RULE_setdie = 5, RULE_set = 6, RULE_setcontents = 7, RULE_empty = 8;
 	public static final String[] ruleNames = {
-		"expr", "set", "setcontents", "empty"
+		"prgm", "expr", "factor", "primary", "intdie", "setdie", "set", "setcontents", 
+		"empty"
 	};
 
 	@Override
@@ -46,17 +48,63 @@ public class diceGrammarParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+	public static class PrgmContext extends ParserRuleContext {
+		public Die d;
+		public ExprContext expr;
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode EOF() { return getToken(diceGrammarParser.EOF, 0); }
+		public PrgmContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_prgm; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).enterPrgm(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).exitPrgm(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof diceGrammarVisitor ) return ((diceGrammarVisitor<? extends T>)visitor).visitPrgm(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final PrgmContext prgm() throws RecognitionException {
+		PrgmContext _localctx = new PrgmContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_prgm);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(18); ((PrgmContext)_localctx).expr = expr();
+			setState(19); match(EOF);
+			 ((PrgmContext)_localctx).d = ((PrgmContext)_localctx).expr.d; 
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class ExprContext extends ParserRuleContext {
 		public Die d;
-		public Token i1;
-		public Token i2;
-		public SetContext s1;
-		public List<TerminalNode> INTEGER() { return getTokens(diceGrammarParser.INTEGER); }
-		public TerminalNode INTEGER(int i) {
-			return getToken(diceGrammarParser.INTEGER, i);
+		public FactorContext factor;
+		public ExprContext e1;
+		public FactorContext factor() {
+			return getRuleContext(FactorContext.class,0);
 		}
-		public SetContext set() {
-			return getRuleContext(SetContext.class,0);
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
 		}
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -79,37 +127,257 @@ public class diceGrammarParser extends Parser {
 
 	public final ExprContext expr() throws RecognitionException {
 		ExprContext _localctx = new ExprContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_expr);
+		enterRule(_localctx, 2, RULE_expr);
+
+		          Die d2 = null;
+		    
+		int _la;
 		try {
-			setState(17);
-			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(22); ((ExprContext)_localctx).factor = factor();
+			setState(27);
+			_la = _input.LA(1);
+			if (_la==ADDOP) {
+				{
+				setState(23); match(ADDOP);
+				setState(24); ((ExprContext)_localctx).e1 = expr();
+				d2=((ExprContext)_localctx).e1.d;
+				}
+			}
+
+			if(null==d2){((ExprContext)_localctx).d = ((ExprContext)_localctx).factor.d;} else{ ((ExprContext)_localctx).d = new BinaryDie(((ExprContext)_localctx).factor.d,d2);}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class FactorContext extends ParserRuleContext {
+		public Die d;
+		public PrimaryContext primary;
+		public PrimaryContext primary() {
+			return getRuleContext(PrimaryContext.class,0);
+		}
+		public FactorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_factor; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).enterFactor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).exitFactor(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof diceGrammarVisitor ) return ((diceGrammarVisitor<? extends T>)visitor).visitFactor(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FactorContext factor() throws RecognitionException {
+		FactorContext _localctx = new FactorContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_factor);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(31); ((FactorContext)_localctx).primary = primary();
+			((FactorContext)_localctx).d = ((FactorContext)_localctx).primary.d;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class PrimaryContext extends ParserRuleContext {
+		public Die d;
+		public ExprContext expr;
+		public IntdieContext intdie;
+		public SetdieContext setdie;
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public SetdieContext setdie() {
+			return getRuleContext(SetdieContext.class,0);
+		}
+		public IntdieContext intdie() {
+			return getRuleContext(IntdieContext.class,0);
+		}
+		public PrimaryContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_primary; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).enterPrimary(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).exitPrimary(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof diceGrammarVisitor ) return ((diceGrammarVisitor<? extends T>)visitor).visitPrimary(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final PrimaryContext primary() throws RecognitionException {
+		PrimaryContext _localctx = new PrimaryContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_primary);
+		try {
+			setState(45);
+			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(8); ((ExprContext)_localctx).i1 = match(INTEGER);
-				setState(9); match(1);
-				setState(10); ((ExprContext)_localctx).i2 = match(INTEGER);
-
-				                           int n = Integer.parseInt((((ExprContext)_localctx).i1!=null?((ExprContext)_localctx).i1.getText():null));
-				                           int k = Integer.parseInt((((ExprContext)_localctx).i2!=null?((ExprContext)_localctx).i2.getText():null));
-				                           ((ExprContext)_localctx).d =  new IntDie(n,k);
-				                           
+				setState(34); match(2);
+				setState(35); ((PrimaryContext)_localctx).expr = expr();
+				setState(36); match(3);
+				((PrimaryContext)_localctx).d = ((PrimaryContext)_localctx).expr.d;
 				}
 				break;
 
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(12); ((ExprContext)_localctx).i1 = match(INTEGER);
-				setState(13); match(1);
-				setState(14); ((ExprContext)_localctx).s1 = set();
-
-				                           int n = Integer.parseInt((((ExprContext)_localctx).i1!=null?((ExprContext)_localctx).i1.getText():null));
-				                           List<Object> options = ((ExprContext)_localctx).s1.l;
-				                           ((ExprContext)_localctx).d =  new SetDie(n,options);
-				                           
+				setState(39); ((PrimaryContext)_localctx).intdie = intdie();
+				((PrimaryContext)_localctx).d = ((PrimaryContext)_localctx).intdie.d;
 				}
 				break;
+
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(42); ((PrimaryContext)_localctx).setdie = setdie();
+				((PrimaryContext)_localctx).d = ((PrimaryContext)_localctx).setdie.d;
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class IntdieContext extends ParserRuleContext {
+		public IntDie d;
+		public Token i1;
+		public Token i2;
+		public List<TerminalNode> INTEGER() { return getTokens(diceGrammarParser.INTEGER); }
+		public TerminalNode INTEGER(int i) {
+			return getToken(diceGrammarParser.INTEGER, i);
+		}
+		public IntdieContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_intdie; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).enterIntdie(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).exitIntdie(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof diceGrammarVisitor ) return ((diceGrammarVisitor<? extends T>)visitor).visitIntdie(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final IntdieContext intdie() throws RecognitionException {
+		IntdieContext _localctx = new IntdieContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_intdie);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(47); ((IntdieContext)_localctx).i1 = match(INTEGER);
+			setState(48); match(1);
+			setState(49); ((IntdieContext)_localctx).i2 = match(INTEGER);
+
+			                           int n = Integer.parseInt((((IntdieContext)_localctx).i1!=null?((IntdieContext)_localctx).i1.getText():null));
+			                           int k = Integer.parseInt((((IntdieContext)_localctx).i2!=null?((IntdieContext)_localctx).i2.getText():null));
+			                           ((IntdieContext)_localctx).d =  new IntDie(n,k);
+			                           
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class SetdieContext extends ParserRuleContext {
+		public SetDie d;
+		public Token i1;
+		public SetContext s1;
+		public TerminalNode INTEGER() { return getToken(diceGrammarParser.INTEGER, 0); }
+		public SetContext set() {
+			return getRuleContext(SetContext.class,0);
+		}
+		public SetdieContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_setdie; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).enterSetdie(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof diceGrammarListener ) ((diceGrammarListener)listener).exitSetdie(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof diceGrammarVisitor ) return ((diceGrammarVisitor<? extends T>)visitor).visitSetdie(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final SetdieContext setdie() throws RecognitionException {
+		SetdieContext _localctx = new SetdieContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_setdie);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(52); ((SetdieContext)_localctx).i1 = match(INTEGER);
+			setState(53); match(1);
+			setState(54); ((SetdieContext)_localctx).s1 = set();
+
+			                           int n = Integer.parseInt((((SetdieContext)_localctx).i1!=null?((SetdieContext)_localctx).i1.getText():null));
+			                           List<Object> options = ((SetdieContext)_localctx).s1.l;
+			                           ((SetdieContext)_localctx).d =  new SetDie(n,options);
+			                           
 			}
 		}
 		catch (RecognitionException re) {
@@ -154,7 +422,7 @@ public class diceGrammarParser extends Parser {
 
 	public final SetContext set() throws RecognitionException {
 		SetContext _localctx = new SetContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_set);
+		enterRule(_localctx, 12, RULE_set);
 
 		      ((SetContext)_localctx).l = new ArrayList<Object>();
 		    
@@ -162,25 +430,25 @@ public class diceGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(19); match(2);
-			setState(20); ((SetContext)_localctx).sc1 = setcontents();
+			setState(57); match(4);
+			setState(58); ((SetContext)_localctx).sc1 = setcontents();
 			 _localctx.l.add(((SetContext)_localctx).sc1.o); 
-			setState(28);
+			setState(66);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==3) {
+			while (_la==5) {
 				{
 				{
-				setState(22); match(3);
-				setState(23); ((SetContext)_localctx).sc = setcontents();
+				setState(60); match(5);
+				setState(61); ((SetContext)_localctx).sc = setcontents();
 				_localctx.l.add(((SetContext)_localctx).sc.o);
 				}
 				}
-				setState(30);
+				setState(68);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(31); match(4);
+			setState(69); match(6);
 			}
 		}
 		catch (RecognitionException re) {
@@ -219,11 +487,11 @@ public class diceGrammarParser extends Parser {
 
 	public final SetcontentsContext setcontents() throws RecognitionException {
 		SetcontentsContext _localctx = new SetcontentsContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_setcontents);
+		enterRule(_localctx, 14, RULE_setcontents);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(33); ((SetcontentsContext)_localctx).INTEGER = match(INTEGER);
+			setState(71); ((SetcontentsContext)_localctx).INTEGER = match(INTEGER);
 			 ((SetcontentsContext)_localctx).o = Integer.valueOf((((SetcontentsContext)_localctx).INTEGER!=null?((SetcontentsContext)_localctx).INTEGER.getText():null)); 
 			}
 		}
@@ -260,7 +528,7 @@ public class diceGrammarParser extends Parser {
 
 	public final EmptyContext empty() throws RecognitionException {
 		EmptyContext _localctx = new EmptyContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_empty);
+		enterRule(_localctx, 16, RULE_empty);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -278,17 +546,24 @@ public class diceGrammarParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\7)\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2\24\n\2\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\3\3\7\3\35\n\3\f\3\16\3 \13\3\3\3\3\3\3\4\3\4\3\4"+
-		"\3\5\3\5\3\5\2\6\2\4\6\b\2\2&\2\23\3\2\2\2\4\25\3\2\2\2\6#\3\2\2\2\b&"+
-		"\3\2\2\2\n\13\7\7\2\2\13\f\7\3\2\2\f\r\7\7\2\2\r\24\b\2\1\2\16\17\7\7"+
-		"\2\2\17\20\7\3\2\2\20\21\5\4\3\2\21\22\b\2\1\2\22\24\3\2\2\2\23\n\3\2"+
-		"\2\2\23\16\3\2\2\2\24\3\3\2\2\2\25\26\7\4\2\2\26\27\5\6\4\2\27\36\b\3"+
-		"\1\2\30\31\7\5\2\2\31\32\5\6\4\2\32\33\b\3\1\2\33\35\3\2\2\2\34\30\3\2"+
-		"\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37!\3\2\2\2 \36\3\2\2\2!"+
-		"\"\7\6\2\2\"\5\3\2\2\2#$\7\7\2\2$%\b\4\1\2%\7\3\2\2\2&\'\3\2\2\2\'\t\3"+
-		"\2\2\2\4\23\36";
+		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\nO\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2"+
+		"\3\2\3\3\3\3\3\3\3\3\3\3\5\3\36\n\3\3\3\3\3\3\4\3\4\3\4\3\5\3\5\3\5\3"+
+		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\60\n\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7"+
+		"\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\7\bC\n\b\f\b\16\bF\13\b\3\b\3"+
+		"\b\3\t\3\t\3\t\3\n\3\n\3\n\2\13\2\4\6\b\n\f\16\20\22\2\2I\2\24\3\2\2\2"+
+		"\4\30\3\2\2\2\6!\3\2\2\2\b/\3\2\2\2\n\61\3\2\2\2\f\66\3\2\2\2\16;\3\2"+
+		"\2\2\20I\3\2\2\2\22L\3\2\2\2\24\25\5\4\3\2\25\26\7\2\2\3\26\27\b\2\1\2"+
+		"\27\3\3\2\2\2\30\35\5\6\4\2\31\32\7\t\2\2\32\33\5\4\3\2\33\34\b\3\1\2"+
+		"\34\36\3\2\2\2\35\31\3\2\2\2\35\36\3\2\2\2\36\37\3\2\2\2\37 \b\3\1\2 "+
+		"\5\3\2\2\2!\"\5\b\5\2\"#\b\4\1\2#\7\3\2\2\2$%\7\4\2\2%&\5\4\3\2&\'\7\5"+
+		"\2\2\'(\b\5\1\2(\60\3\2\2\2)*\5\n\6\2*+\b\5\1\2+\60\3\2\2\2,-\5\f\7\2"+
+		"-.\b\5\1\2.\60\3\2\2\2/$\3\2\2\2/)\3\2\2\2/,\3\2\2\2\60\t\3\2\2\2\61\62"+
+		"\7\n\2\2\62\63\7\3\2\2\63\64\7\n\2\2\64\65\b\6\1\2\65\13\3\2\2\2\66\67"+
+		"\7\n\2\2\678\7\3\2\289\5\16\b\29:\b\7\1\2:\r\3\2\2\2;<\7\6\2\2<=\5\20"+
+		"\t\2=D\b\b\1\2>?\7\7\2\2?@\5\20\t\2@A\b\b\1\2AC\3\2\2\2B>\3\2\2\2CF\3"+
+		"\2\2\2DB\3\2\2\2DE\3\2\2\2EG\3\2\2\2FD\3\2\2\2GH\7\b\2\2H\17\3\2\2\2I"+
+		"J\7\n\2\2JK\b\t\1\2K\21\3\2\2\2LM\3\2\2\2M\23\3\2\2\2\5\35/D";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

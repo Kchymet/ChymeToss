@@ -14,6 +14,17 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface diceGrammarListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link diceGrammarParser#intdie}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntdie(@NotNull diceGrammarParser.IntdieContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link diceGrammarParser#intdie}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntdie(@NotNull diceGrammarParser.IntdieContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link diceGrammarParser#set}.
 	 * @param ctx the parse tree
 	 */
@@ -45,6 +56,50 @@ public interface diceGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSetcontents(@NotNull diceGrammarParser.SetcontentsContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link diceGrammarParser#prgm}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrgm(@NotNull diceGrammarParser.PrgmContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link diceGrammarParser#prgm}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrgm(@NotNull diceGrammarParser.PrgmContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link diceGrammarParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactor(@NotNull diceGrammarParser.FactorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link diceGrammarParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactor(@NotNull diceGrammarParser.FactorContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link diceGrammarParser#setdie}.
+	 * @param ctx the parse tree
+	 */
+	void enterSetdie(@NotNull diceGrammarParser.SetdieContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link diceGrammarParser#setdie}.
+	 * @param ctx the parse tree
+	 */
+	void exitSetdie(@NotNull diceGrammarParser.SetdieContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link diceGrammarParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimary(@NotNull diceGrammarParser.PrimaryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link diceGrammarParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimary(@NotNull diceGrammarParser.PrimaryContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link diceGrammarParser#empty}.

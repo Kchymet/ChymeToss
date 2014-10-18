@@ -17,6 +17,13 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface diceGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link diceGrammarParser#intdie}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntdie(@NotNull diceGrammarParser.IntdieContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link diceGrammarParser#set}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -36,6 +43,34 @@ public interface diceGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSetcontents(@NotNull diceGrammarParser.SetcontentsContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link diceGrammarParser#prgm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrgm(@NotNull diceGrammarParser.PrgmContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link diceGrammarParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFactor(@NotNull diceGrammarParser.FactorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link diceGrammarParser#setdie}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSetdie(@NotNull diceGrammarParser.SetdieContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link diceGrammarParser#primary}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrimary(@NotNull diceGrammarParser.PrimaryContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link diceGrammarParser#empty}.
