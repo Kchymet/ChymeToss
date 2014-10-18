@@ -3,13 +3,16 @@ package com.chymet.toss.parse;
 import android.content.res.AssetManager;
 import android.test.AndroidTestCase;
 
+import com.chymet.toss.dice.Die;
+import com.chymet.toss.dice.IntDie;
+import com.chymet.toss.dice.SetDie;
+
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.InputStream;
 
 public class diceGrammarParserTest extends AndroidTestCase {
-    //private AssetManager assets;
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -20,18 +23,20 @@ public class diceGrammarParserTest extends AndroidTestCase {
         InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest1.txt");
         diceGrammarLexer a = new diceGrammarLexer(new ANTLRInputStream(input));
     }
-    public void testCase1() throws Exception {
+    public void testNdK() throws Exception {
         //tests a basic ndk die syntax
         InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest1.txt");
         diceGrammarLexer a = new diceGrammarLexer(new ANTLRInputStream(input));
         diceGrammarParser b = new diceGrammarParser(new CommonTokenStream(a));
-        b.expr();
+        Die d = b.expr().d;
+        assertEquals(IntDie.class,d.getClass());
     }
-    public void testCase2() throws Exception {
+    public void testIntSet() throws Exception {
         //tests a set die syntax
         InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest2.txt");
         diceGrammarLexer a = new diceGrammarLexer(new ANTLRInputStream(input));
         diceGrammarParser b = new diceGrammarParser(new CommonTokenStream(a));
-        b.expr();
+        Die d = b.expr().d;
+        assertEquals(SetDie.class,d.getClass());
     }
 }
