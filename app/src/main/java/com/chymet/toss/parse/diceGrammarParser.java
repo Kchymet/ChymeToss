@@ -20,9 +20,11 @@ public class diceGrammarParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, ADDOP=7, INTEGER=8;
+		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, ADDOP=7, INTEGER=8, WHITESPACE=9, 
+		ERROR=10;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'d'", "'('", "')'", "'{'", "','", "'}'", "'+'", "INTEGER"
+		"<INVALID>", "'d'", "'('", "')'", "'{'", "','", "'}'", "'+'", "INTEGER", 
+		"WHITESPACE", "ERROR"
 	};
 	public static final int
 		RULE_prgm = 0, RULE_expr = 1, RULE_factor = 2, RULE_primary = 3, RULE_intdie = 4, 
@@ -211,9 +213,11 @@ public class diceGrammarParser extends Parser {
 		public ExprContext expr;
 		public IntdieContext intdie;
 		public SetdieContext setdie;
+		public Token INTEGER;
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
+		public TerminalNode INTEGER() { return getToken(diceGrammarParser.INTEGER, 0); }
 		public SetdieContext setdie() {
 			return getRuleContext(SetdieContext.class,0);
 		}
@@ -243,7 +247,7 @@ public class diceGrammarParser extends Parser {
 		PrimaryContext _localctx = new PrimaryContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_primary);
 		try {
-			setState(45);
+			setState(47);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -268,6 +272,14 @@ public class diceGrammarParser extends Parser {
 				{
 				setState(42); ((PrimaryContext)_localctx).setdie = setdie();
 				((PrimaryContext)_localctx).d = ((PrimaryContext)_localctx).setdie.d;
+				}
+				break;
+
+			case 4:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(45); ((PrimaryContext)_localctx).INTEGER = match(INTEGER);
+				((PrimaryContext)_localctx).d = new ConstantDie(Integer.valueOf((((PrimaryContext)_localctx).INTEGER!=null?((PrimaryContext)_localctx).INTEGER.getText():null)));
 				}
 				break;
 			}
@@ -316,9 +328,9 @@ public class diceGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(47); ((IntdieContext)_localctx).i1 = match(INTEGER);
-			setState(48); match(1);
-			setState(49); ((IntdieContext)_localctx).i2 = match(INTEGER);
+			setState(49); ((IntdieContext)_localctx).i1 = match(INTEGER);
+			setState(50); match(1);
+			setState(51); ((IntdieContext)_localctx).i2 = match(INTEGER);
 
 			                           int n = Integer.parseInt((((IntdieContext)_localctx).i1!=null?((IntdieContext)_localctx).i1.getText():null));
 			                           int k = Integer.parseInt((((IntdieContext)_localctx).i2!=null?((IntdieContext)_localctx).i2.getText():null));
@@ -370,9 +382,9 @@ public class diceGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(52); ((SetdieContext)_localctx).i1 = match(INTEGER);
-			setState(53); match(1);
-			setState(54); ((SetdieContext)_localctx).s1 = set();
+			setState(54); ((SetdieContext)_localctx).i1 = match(INTEGER);
+			setState(55); match(1);
+			setState(56); ((SetdieContext)_localctx).s1 = set();
 
 			                           int n = Integer.parseInt((((SetdieContext)_localctx).i1!=null?((SetdieContext)_localctx).i1.getText():null));
 			                           List<Object> options = ((SetdieContext)_localctx).s1.l;
@@ -430,25 +442,25 @@ public class diceGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(57); match(4);
-			setState(58); ((SetContext)_localctx).sc1 = setcontents();
+			setState(59); match(4);
+			setState(60); ((SetContext)_localctx).sc1 = setcontents();
 			 _localctx.l.add(((SetContext)_localctx).sc1.o); 
-			setState(66);
+			setState(68);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==5) {
 				{
 				{
-				setState(60); match(5);
-				setState(61); ((SetContext)_localctx).sc = setcontents();
+				setState(62); match(5);
+				setState(63); ((SetContext)_localctx).sc = setcontents();
 				_localctx.l.add(((SetContext)_localctx).sc.o);
 				}
 				}
-				setState(68);
+				setState(70);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(69); match(6);
+			setState(71); match(6);
 			}
 		}
 		catch (RecognitionException re) {
@@ -491,7 +503,7 @@ public class diceGrammarParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71); ((SetcontentsContext)_localctx).INTEGER = match(INTEGER);
+			setState(73); ((SetcontentsContext)_localctx).INTEGER = match(INTEGER);
 			 ((SetcontentsContext)_localctx).o = Integer.valueOf((((SetcontentsContext)_localctx).INTEGER!=null?((SetcontentsContext)_localctx).INTEGER.getText():null)); 
 			}
 		}
@@ -546,24 +558,25 @@ public class diceGrammarParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\nO\4\2\t\2\4\3\t"+
+		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\fQ\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2\3\2"+
 		"\3\2\3\3\3\3\3\3\3\3\3\3\5\3\36\n\3\3\3\3\3\3\4\3\4\3\4\3\5\3\5\3\5\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\60\n\5\3\6\3\6\3\6\3\6\3\6\3\7\3\7"+
-		"\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\7\bC\n\b\f\b\16\bF\13\b\3\b\3"+
-		"\b\3\t\3\t\3\t\3\n\3\n\3\n\2\13\2\4\6\b\n\f\16\20\22\2\2I\2\24\3\2\2\2"+
-		"\4\30\3\2\2\2\6!\3\2\2\2\b/\3\2\2\2\n\61\3\2\2\2\f\66\3\2\2\2\16;\3\2"+
-		"\2\2\20I\3\2\2\2\22L\3\2\2\2\24\25\5\4\3\2\25\26\7\2\2\3\26\27\b\2\1\2"+
-		"\27\3\3\2\2\2\30\35\5\6\4\2\31\32\7\t\2\2\32\33\5\4\3\2\33\34\b\3\1\2"+
-		"\34\36\3\2\2\2\35\31\3\2\2\2\35\36\3\2\2\2\36\37\3\2\2\2\37 \b\3\1\2 "+
-		"\5\3\2\2\2!\"\5\b\5\2\"#\b\4\1\2#\7\3\2\2\2$%\7\4\2\2%&\5\4\3\2&\'\7\5"+
-		"\2\2\'(\b\5\1\2(\60\3\2\2\2)*\5\n\6\2*+\b\5\1\2+\60\3\2\2\2,-\5\f\7\2"+
-		"-.\b\5\1\2.\60\3\2\2\2/$\3\2\2\2/)\3\2\2\2/,\3\2\2\2\60\t\3\2\2\2\61\62"+
-		"\7\n\2\2\62\63\7\3\2\2\63\64\7\n\2\2\64\65\b\6\1\2\65\13\3\2\2\2\66\67"+
-		"\7\n\2\2\678\7\3\2\289\5\16\b\29:\b\7\1\2:\r\3\2\2\2;<\7\6\2\2<=\5\20"+
-		"\t\2=D\b\b\1\2>?\7\7\2\2?@\5\20\t\2@A\b\b\1\2AC\3\2\2\2B>\3\2\2\2CF\3"+
-		"\2\2\2DB\3\2\2\2DE\3\2\2\2EG\3\2\2\2FD\3\2\2\2GH\7\b\2\2H\17\3\2\2\2I"+
-		"J\7\n\2\2JK\b\t\1\2K\21\3\2\2\2LM\3\2\2\2M\23\3\2\2\2\5\35/D";
+		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\62\n\5\3\6\3\6\3\6\3\6\3\6"+
+		"\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\7\bE\n\b\f\b\16\bH\13"+
+		"\b\3\b\3\b\3\t\3\t\3\t\3\n\3\n\3\n\2\13\2\4\6\b\n\f\16\20\22\2\2L\2\24"+
+		"\3\2\2\2\4\30\3\2\2\2\6!\3\2\2\2\b\61\3\2\2\2\n\63\3\2\2\2\f8\3\2\2\2"+
+		"\16=\3\2\2\2\20K\3\2\2\2\22N\3\2\2\2\24\25\5\4\3\2\25\26\7\2\2\3\26\27"+
+		"\b\2\1\2\27\3\3\2\2\2\30\35\5\6\4\2\31\32\7\t\2\2\32\33\5\4\3\2\33\34"+
+		"\b\3\1\2\34\36\3\2\2\2\35\31\3\2\2\2\35\36\3\2\2\2\36\37\3\2\2\2\37 \b"+
+		"\3\1\2 \5\3\2\2\2!\"\5\b\5\2\"#\b\4\1\2#\7\3\2\2\2$%\7\4\2\2%&\5\4\3\2"+
+		"&\'\7\5\2\2\'(\b\5\1\2(\62\3\2\2\2)*\5\n\6\2*+\b\5\1\2+\62\3\2\2\2,-\5"+
+		"\f\7\2-.\b\5\1\2.\62\3\2\2\2/\60\7\n\2\2\60\62\b\5\1\2\61$\3\2\2\2\61"+
+		")\3\2\2\2\61,\3\2\2\2\61/\3\2\2\2\62\t\3\2\2\2\63\64\7\n\2\2\64\65\7\3"+
+		"\2\2\65\66\7\n\2\2\66\67\b\6\1\2\67\13\3\2\2\289\7\n\2\29:\7\3\2\2:;\5"+
+		"\16\b\2;<\b\7\1\2<\r\3\2\2\2=>\7\6\2\2>?\5\20\t\2?F\b\b\1\2@A\7\7\2\2"+
+		"AB\5\20\t\2BC\b\b\1\2CE\3\2\2\2D@\3\2\2\2EH\3\2\2\2FD\3\2\2\2FG\3\2\2"+
+		"\2GI\3\2\2\2HF\3\2\2\2IJ\7\b\2\2J\17\3\2\2\2KL\7\n\2\2LM\b\t\1\2M\21\3"+
+		"\2\2\2NO\3\2\2\2O\23\3\2\2\2\5\35\61F";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {

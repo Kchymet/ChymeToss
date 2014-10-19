@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.test.AndroidTestCase;
 
 import com.chymet.toss.dice.BinaryDie;
+import com.chymet.toss.dice.ConstantDie;
 import com.chymet.toss.dice.Die;
 import com.chymet.toss.dice.IntDie;
 import com.chymet.toss.dice.SetDie;
@@ -40,6 +41,14 @@ public class diceGrammarParserTest extends AndroidTestCase {
         diceGrammarParser b = new diceGrammarParser(new CommonTokenStream(a));
         Die d = b.prgm().d;
         assertTrue(d.getClass().toString(), d instanceof SetDie);
+    }
+    public void testConst() throws Exception {
+        //tests a set die syntax
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest6.txt");
+        diceGrammarLexer a = new diceGrammarLexer(new ANTLRInputStream(input));
+        diceGrammarParser b = new diceGrammarParser(new CommonTokenStream(a));
+        Die d = b.prgm().d;
+        assertTrue(d.getClass().toString(), d instanceof ConstantDie);
     }
     public void testIntAdd() throws Exception {
         //tests input with multiple dies

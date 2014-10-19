@@ -39,6 +39,7 @@ primary returns [Die d]
     : '(' expr ')'  {$d=$expr.d;}
     | intdie        {$d=$intdie.d;}
     | setdie        {$d=$setdie.d;}
+    | INTEGER       {$d=new ConstantDie(Integer.valueOf($INTEGER.text));}
     ;
 
 intdie returns [IntDie d]
@@ -84,4 +85,12 @@ ADDOP
 
 INTEGER
     : [0-9]+
+    ;
+
+WHITESPACE
+    : ('\t' | '\r' | '\n' | ' ' ) -> skip
+    ;
+
+ERROR
+    : .
     ;
