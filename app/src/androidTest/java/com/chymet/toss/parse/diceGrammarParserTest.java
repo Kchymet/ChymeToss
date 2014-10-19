@@ -42,6 +42,22 @@ public class diceGrammarParserTest extends AndroidTestCase {
         Die d = b.prgm().d;
         assertTrue(d.getClass().toString(), d instanceof SetDie);
     }
+    public void testStringSet() throws Exception {
+        //tests a set die syntax
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest8.txt");
+        diceGrammarLexer a = new diceGrammarLexer(new ANTLRInputStream(input));
+        diceGrammarParser b = new diceGrammarParser(new CommonTokenStream(a));
+        Die d = b.prgm().d;
+        assertTrue(d.getClass().toString(), d instanceof SetDie);
+    }
+    public void testMixedSet() throws Exception {
+        //tests a set die syntax
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest9.txt");
+        diceGrammarLexer a = new diceGrammarLexer(new ANTLRInputStream(input));
+        diceGrammarParser b = new diceGrammarParser(new CommonTokenStream(a));
+        Die d = b.prgm().d;
+        assertTrue(d.getClass().toString(), d instanceof SetDie);
+    }
     public void testConst() throws Exception {
         //tests a set die syntax
         InputStream input = this.getClass().getClassLoader().getResourceAsStream("assets/gtest6.txt");

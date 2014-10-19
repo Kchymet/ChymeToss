@@ -68,6 +68,7 @@ set returns [List<Object> l]
     
 setcontents returns [Object o]
     : INTEGER { $o=Integer.valueOf($INTEGER.text); }
+    | STRING  { $o=$STRING.text; }
     ;
 
 empty
@@ -85,6 +86,10 @@ ADDOP
 
 INTEGER
     : [0-9]+
+    ;
+
+STRING
+    : ('"' ('\.'|~'"')*'"')
     ;
 
 WHITESPACE
