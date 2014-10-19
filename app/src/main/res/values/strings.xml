@@ -17,6 +17,9 @@
         -ndk+nd{k1,k2,k3}+k concatenation into set result\n
         -string or integer values in sets
         Upcoming Features:\n
+        -save/cache dice strings
+        -predefined dice strings
+        -set selection no repeats
         -rerolling certain results (ndkrj)\n
         -drop low/high and keep low/high\n
         -exploding dice\n
